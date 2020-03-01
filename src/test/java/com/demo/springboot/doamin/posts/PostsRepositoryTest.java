@@ -25,7 +25,7 @@ public class PostsRepositoryTest {
     }
 
     @Test
-    public void savePost_retrievePost() {
+    public void savePost() {
         String title = "test";
         String content = "This is a test.";
 
