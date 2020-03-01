@@ -58,6 +58,8 @@ public class PostsApiControllerTest {
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
+        System.out.println(">>> Created date: " + all.get(0).getCreatedDate());
+        System.out.println(">>> Modified date: " + all.get(0).getModifiedDate());
         assertThat(all.get(0).getTitle()).isEqualTo(title);
         assertThat(all.get(0).getContent()).isEqualTo(content);
     }
@@ -90,6 +92,8 @@ public class PostsApiControllerTest {
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
         List<Posts> all = postsRepository.findAll();
+        System.out.println(">>> Created date: " + all.get(0).getCreatedDate());
+        System.out.println(">>> Modified date: " + all.get(0).getModifiedDate());
         assertThat(all.get(0).getTitle()).isEqualTo(updateTitle);
         assertThat(all.get(0).getContent()).isEqualTo(updateContent);
 
