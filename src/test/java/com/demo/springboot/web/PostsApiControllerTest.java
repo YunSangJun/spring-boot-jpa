@@ -43,11 +43,12 @@ public class PostsApiControllerTest {
     public void savePost() throws Exception {
         String title = "test";
         String content = "This is a test.";
+        String author = "ysj188cm@gmail.com";
 
         PostsSaveRequestDto requestDto = PostsSaveRequestDto.builder()
                 .title(title)
                 .content(content)
-                .author("yunsangjun")
+                .author(author)
                 .build();
 
         String url = "http://localhost:" + port + "/api/v1/posts";
@@ -57,22 +58,24 @@ public class PostsApiControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
-        List<Posts> all = postsRepository.findAll();
-        System.out.println(">>> Created date: " + all.get(0).getCreatedDate());
-        System.out.println(">>> Modified date: " + all.get(0).getModifiedDate());
-        assertThat(all.get(0).getTitle()).isEqualTo(title);
-        assertThat(all.get(0).getContent()).isEqualTo(content);
+        List<Posts> postsList = postsRepository.findAll();
+        Posts posts = postsList.get(0);
+        System.out.println(">>> Created date: " + posts.getCreatedDate());
+        System.out.println(">>> Modified date: " + posts.getModifiedDate());
+        assertThat(posts.getTitle()).isEqualTo(title);
+        assertThat(posts.getContent()).isEqualTo(content);
     }
 
     @Test
     public void updatePost() throws Exception {
         String title = "test";
         String content = "This is a test.";
+        String author = "ysj188cm@gmail.com";
 
         Posts savedPosts = postsRepository.save(Posts.builder()
                 .title(title)
                 .content(content)
-                .author("yunsangjun")
+                .author(author)
                 .build());
 
         Long updateId = savedPosts.getId();
@@ -91,11 +94,38 @@ public class PostsApiControllerTest {
         assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(responseEntity.getBody()).isGreaterThan(0L);
 
-        List<Posts> all = postsRepository.findAll();
-        System.out.println(">>> Created date: " + all.get(0).getCreatedDate());
-        System.out.println(">>> Modified date: " + all.get(0).getModifiedDate());
-        assertThat(all.get(0).getTitle()).isEqualTo(updateTitle);
-        assertThat(all.get(0).getContent()).isEqualTo(updateContent);
+        List<Posts> postsList = postsRepository.findAll();
+        Posts posts = postsList.get(0);
+        System.out.println(">>> Created date: " + posts.getCreatedDate());
+        System.out.println(">>> Modified date: " + posts.getModifiedDate());
+        assertThat(posts.getTitle()).isEqualTo(updateTitle);
+        assertThat(posts.getContent()).isEqualTo(updateContent);
+
+    }
+
+    @Test
+    public void getPostById() throws Exception {
+        String title = "test";
+        String content = "This is a test.";
+        String author = "ysj188cm@gmail.com";
+
+        Posts savedPosts = postsRepository.save(Posts.builder()
+                .title(title)
+                .content(content)
+                .author(author)
+                .build());
+
+        Long postId = savedPosts.getId();
+
+        String url = "http://localhost:" + port +  "/api/v1/posts/" + postId;
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        List<Posts> postsList = postsRepository.findAll();
+        Posts posts = postsList.get(0);
+        assertThat(posts.getTitle()).isEqualTo(title);
+        assertThat(posts.getContent()).isEqualTo(content);
+        assertThat(posts.getAuthor()).isEqualTo(author);
 
     }
 
