@@ -103,30 +103,4 @@ public class PostsApiControllerTest {
 
     }
 
-    @Test
-    public void getPostById() throws Exception {
-        String title = "test";
-        String content = "This is a test.";
-        String author = "ysj188cm@gmail.com";
-
-        Posts savedPosts = postsRepository.save(Posts.builder()
-                .title(title)
-                .content(content)
-                .author(author)
-                .build());
-
-        Long postId = savedPosts.getId();
-
-        String url = "http://localhost:" + port +  "/api/v1/posts/" + postId;
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(url, String.class);
-        assertThat(responseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-        List<Posts> postsList = postsRepository.findAll();
-        Posts posts = postsList.get(0);
-        assertThat(posts.getTitle()).isEqualTo(title);
-        assertThat(posts.getContent()).isEqualTo(content);
-        assertThat(posts.getAuthor()).isEqualTo(author);
-
-    }
-
 }
