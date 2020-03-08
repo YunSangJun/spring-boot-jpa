@@ -7,6 +7,8 @@ import com.demo.springboot.web.dto.PostsUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class PostsApiController {
@@ -26,5 +28,13 @@ public class PostsApiController {
     @GetMapping("/api/v1/posts/{id}")
     public PostsResponseDto findById(@PathVariable Long id) {
         return postsService.findById(id);
+    }
+
+    @GetMapping("/api/v1/posts")
+    public List<PostsResponseDto> findDynamicQuery(@RequestParam(required = false) String title,
+                                                   @RequestParam(required = false) String content,
+                                                   @RequestParam(required = false) String author) {
+
+        return postsService.findDynamicQuery(title, content, author);
     }
 }

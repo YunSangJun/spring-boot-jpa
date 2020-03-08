@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
 @Service
 public class PostsService {
@@ -34,5 +37,14 @@ public class PostsService {
         return new PostsResponseDto(entity);
     }
 
+    public List<PostsResponseDto> findDynamicQuery(String title, String content, String author) {
+        List<PostsResponseDto> postsResponseDtoList = new ArrayList<PostsResponseDto>();
+        List<Posts> postsList = postsRepository.findDynamicQuery(title, content, author);
+        postsList.forEach(posts -> {
+            postsResponseDtoList.add(new PostsResponseDto(posts));
+        });
+
+        return postsResponseDtoList;
+    }
 
 }
