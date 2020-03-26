@@ -5,3 +5,9 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

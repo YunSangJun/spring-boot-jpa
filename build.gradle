@@ -37,6 +37,7 @@ dependencies {
     compile('com.h2database:h2')
     compile('org.mariadb.jdbc:mariadb-java-client')
     compile('net.logstash.logback:logstash-logback-encoder:6.3')
+    compile("org.springframework.boot:spring-boot-starter-actuator")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
