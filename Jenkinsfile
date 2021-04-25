@@ -1,6 +1,7 @@
 @Library('my-shared-libraries') _
 
 javaPipeline(
+    javaVersion: "8",
     appBuildArgs: "build -x test",
     dockerRegistryURL: "docker.io",
     dockerRepoName: "yunsangjun/spring-boot-jpa",
